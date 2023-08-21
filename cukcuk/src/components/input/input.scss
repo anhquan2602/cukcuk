@@ -1,0 +1,51 @@
+.quan-input {
+    width: 100%;
+    height: 22px;
+    position: relative; 
+    display: flex;
+    .icon-filter{
+        font-weight: 100;
+        font-size: 12px;
+        width: 25px;
+        height: 22px;
+        background-color: #fff;
+        position: relative;
+        border: 1px solid var(--boder-color-main);
+        &:hover {
+            border-color:var(--warning-color) ;
+        }
+        &:active {
+            border-color:var(--boder-color-hover) ;
+        }
+    }
+    .icon-error {
+        width: 22px;
+        height: 22px;
+        margin: 0 5px 0;
+        background: url(../../assets/Resource/exclamation.png) no-repeat;
+        background-position: center;
+    }
+    .input-text-base {
+        font-weight: 100;
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        padding: 0 10px;
+        border: 1px solid var(--boder-color-main);
+        padding: 0 8px;
+        font-size: 12px;
+        outline: none;
+        &:focus-within {
+            border: 1px solid var(--boder-color-hover);
+        }
+    }
+}
+
+.naquan-error {
+    border: 1px solid red;
+
+    &:focus {
+        border: 1px solid red !important;
+        outline: none;
+    }
+}

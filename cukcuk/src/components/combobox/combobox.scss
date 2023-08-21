@@ -1,0 +1,214 @@
+.quan-combobox {
+    position: relative;
+    width: 200px;
+    height: 32px;
+    background-color: #005082;
+
+    ::placeholder {
+        color: white;
+    }
+
+    &:focus-within .combobox__dropdown {
+        display: block;
+    }
+
+    .combobox {
+        display: flex;
+
+        input {
+            font-size: 13px;
+            cursor: text;
+            color: white;
+            padding: 0 10px;
+            background-color: #005082;
+            flex: 1;
+            border: none;
+            outline: none;
+        }
+
+        .icon-dropdown {
+            width: 22px;
+            height: 32px;
+            background: url(../../assets/Resource/dropdown.png)no-repeat -89px 5px;
+
+        }
+
+        .icon-dropdown-filter {
+            width: 32px;
+            height: 32px;
+            background: url(../../assets/Resource/filter_1.png)no-repeat center;
+
+            &:hover {
+                background-color: #003f68;
+            }
+        }
+
+    }
+
+    .combobox__dropdown {
+        display: none;
+        width: 100%;
+        position: absolute;
+        box-sizing: border-box;
+        text-align: left;
+        border: 1px solid #ccc;
+        border-top: none;
+        background-color: #fff;
+        top: 100%;
+        z-index: 2;
+
+        &:active {
+            display: block;
+        }
+
+        .selected-list {
+            color: black;
+            cursor: default;
+        }
+
+        .combobox__dropdown-item {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            height: 28px;
+            padding: 8px;
+            cursor: pointer;
+            transition: 0.1s ease-in-out;
+
+            &:hover {
+                background-color: #b7ddf5;
+            }
+
+            &:active {
+                background-color: #82c5ef;
+            }
+
+            &:focus {
+                background-color: #82c5ef;
+            }
+
+            .keydown-hover {
+                background-color: #82c5ef;
+            }
+        }
+    }
+}
+
+.btn-icon {
+    border: none;
+
+    &:hover {
+        background-color: #005082;
+    }
+}
+
+// combobox theader
+// Dropdown cho table
+// Author Nguyễn anh quân
+//Date 10/9/2023
+.combo_thead {
+    font-size: 10px;
+    position: relative;
+    width: 100%;
+    height: 22px;
+    background-color: white;
+    border: 1px solid var(--boder-color-main);
+    z-index: 2;
+    box-sizing: border-box;
+
+    ::placeholder {
+        color: black;
+    }
+
+    &:focus {
+        border: 1px solid var(--boder-color-hover) !important;
+    }
+
+    &:focus-within .combobox__dropdown {
+        display: block;
+    }
+
+    &:focus-within {
+        border: 1px solid var(--boder-color-hover);
+    }
+
+    .combobox {
+        display: flex;
+        height: 100%;
+
+        .input-text-base {
+            font-weight: 100;
+            height: 100%;
+            overflow: hidden;
+            width: 100%;
+            cursor: text;
+            color: black;
+            padding: 0 10px;
+            background-color: white;
+            font-size: 12px;
+
+        }
+
+        .icon-dropdown {
+            width: 22px;
+            height: 22px;
+            background: url(../../assets/Resource/dropdownblack.png)no-repeat -87px -1px;
+            ;
+        }
+
+        .icon-dropdown-plus {
+            width: 20px;
+            height: 20px;
+            background: url(../../assets/Resource/add-blue-icon.png)no-repeat center;
+        }
+    }
+
+    .combobox__dropdown {
+        display: none;
+        width: 100%;
+        position: absolute;
+        box-sizing: border-box;
+        text-align: left;
+        border: 1px solid #ccc;
+        border-top: none;
+        background-color: #fff;
+        top: calc(100% + 1px);
+        z-index: 2;
+        font-weight: 100;
+
+        &:active {
+            display: block;
+        }
+
+        .selected-list {
+            color: black;
+            cursor: default;
+        }
+
+        .combobox__dropdown-item {
+            align-items: center;
+            display: flex;
+            font-size: 13px;
+            height: 28px;
+            padding: 8px;
+            cursor: pointer;
+            transition: 0.1s ease-in-out;
+
+            &:hover {
+                background-color: #b7ddf5;
+            }
+
+            &:active {
+                background-color: #82c5ef;
+            }
+
+            &:focus {
+                background-color: #82c5ef;
+            }
+
+            .keydown-hover {
+                background-color: #82c5ef;
+            }
+        }
+    }
+}

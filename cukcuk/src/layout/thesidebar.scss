@@ -1,0 +1,43 @@
+.sidebar {
+    width: 219px;
+    height: auto;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    max-height: calc(100vh - 55px);
+    background-color: var(--primary-color);
+
+    .menu__item {
+        height: 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        border-bottom: 1px solid #016087;
+        border-top: 1px solid #038ac1;
+        &:hover {
+            background-color: var(--warning-color);
+        }
+        &.active {
+            background-color: #0199fc;
+        }
+        .menu a{
+            height: 100%;
+            width: 100%;
+           
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-right: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            .item__icon {
+                background-image: url(../../src/assets/Resource/thucdon.png);
+                background-repeat: no-repeat;
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+}
+

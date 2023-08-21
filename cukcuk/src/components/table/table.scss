@@ -1,0 +1,69 @@
+.quan-table {
+    max-height: 1207px;
+    flex: 1;
+    width: 100%;
+    height: calc(100% - 30px);
+    background-color: aliceblue;
+    overflow: auto;
+    position: relative;
+
+    table,
+    thead,
+    .table__thead {
+        position: sticky;
+        display: flex;
+        height: 80px;
+        width: 100%;
+        background-color: #ededed;
+        border-bottom: 1px solid var(--boder-color-main);
+        .td-control {
+            position: sticky !important;
+            right: 0;
+            width: 100px;
+            .ms-icon {
+                background-color: var(--primary-color);
+            }
+        }
+        .table-col--resize {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: 0;
+            width: 8px;
+            height: 100%;
+            cursor: e-resize;
+            z-index: 1;
+        }
+        .table-trow {
+            display: flex;
+            max-width: 100%;
+            max-height: 100%;
+            th,
+            .colum_thead {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                width: 150px;
+                border-right: 1px solid var(--boder-color-main);
+
+                .name__thead {
+                    padding: 7px 10px;
+                    font-weight: normal;
+                    font-size: 12px;
+                    width: 100%;
+                    height: 80%;
+                    background-color: #ededed;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .input__theader {
+                    padding: 2px;
+                }
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,19 @@
+.menu-food {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .menu-function {
+        box-sizing: border-box;
+        column-gap: 8px;
+        width: 100%;
+        height: 30px;
+        background-color: #ededed;
+        border-bottom: 1px solid var(--boder-color-main);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+}
