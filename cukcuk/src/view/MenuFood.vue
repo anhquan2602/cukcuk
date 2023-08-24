@@ -79,14 +79,23 @@
       </MISAButton>
     </div>
     <div class="quan-table">
-      <MISATableVue :columns="columnsTable" :dataTable="dataTable" />
+      <MISATableVue
+        :columns="columnsTable"
+        :dataTable="dataTable"
+        @set-pagesize="setPageSize"
+        @select-row="selectRowTable"
+        @edit-data="handleShowEditInfo"
+      />
     </div>
+    <teleport to="#app">
+      <MenuForm v-if="isShow" @submit-form="submitFormData"> </MenuForm>
+      <MISADialog
+        @close-dialog="closeWhenCheck"
+        @submit-form="submitFormData"
+        @delete-data="deleteEmployee"
+      />
+    </teleport>
   </div>
-  <teleport to="#app">
-    <MenuForm
-    v-if="isShow">
-    </MenuForm>
-  </teleport>
 </template>
 <style lang="scss">
 @import url(./menu.scss);
@@ -96,16 +105,17 @@ import { ref, watch } from "vue";
 import MISACombobox from "../components/combobox/MISACombobox.vue";
 import MISATableVue from "../components/table/MISATable.vue";
 import { convertDataTable } from "../common/convert-data.js";
-import { storeToRefs } from 'pinia'
-import { useModalForm } from '../stores/modalform'
+import { storeToRefs } from "pinia";
+import { useModalForm } from "../stores/modalform";
 import Enum from "../common/enum.js";
 import MenuForm from "./MenuForm.vue";
+import MISADialog from "../components/dialog/MISADialog.vue";
 
-
-const modalForm = useModalForm()
-const { isShow, method, object } = storeToRefs(modalForm)
+const modalForm = useModalForm();
+const { isShow, method, object } = storeToRefs(modalForm);
 const columnsTable = ref();
 const dataTable = ref([]);
+const formFood = ref()
 // /**
 //  * Author: Anh Quân (11/07/2023)
 //  * Description: Hàm set các loại cột cho table
@@ -117,77 +127,77 @@ const setColumnTable = () => {
       dataIndex: "id",
       key: "FoodId",
       type: "id",
-      tooltip: "Loại món",
       inputType: "combobox",
+      columType: "text",
     },
     {
       title: "Mã món",
       dataIndex: "code",
       key: "FoodCode",
       type: "code",
-      tooltip: "Mã món",
       inputType: "filter",
+      columType: "text",
     },
     {
       title: "Tên món",
       dataIndex: "name",
       key: "FoodName",
       type: "name",
-      tooltip: "Tên món",
       inputType: "filter",
+      columType: "text",
     },
     {
       title: "Nhóm thực đơn",
       dataIndex: "FoodGroupId",
       key: "FoodGroupId",
-      tooltip: "Nhóm thực đơn",
       type: "foodGroup",
       inputType: "filter",
+      columType: "text",
     },
     {
       title: "Đơn vị tính",
       dataIndex: "Unit",
       key: "Unit",
       type: "Unit",
-      tooltip: "Đơn vị tính",
       inputType: "filter",
+      columType: "text",
     },
     {
       title: "Giá bán",
       dataIndex: "SellPrice",
       key: "SellPrice",
-      tooltip: "Giá bán",
       inputType: "compare",
       type: "price",
+      columType: "text",
     },
     {
       title: "Thay đổi theo giá",
-      tooltip: "Thay đổi theo giá",
       inputType: "combobox",
+      columType: "checkbox",
     },
     // Địa chỉ
     {
       title: "Điều chỉnh giá tự do",
-      tooltip: "Điều chỉnh giá tự do",
       inputType: "combobox",
+      columType: "checkbox",
     },
     //Tên ngân hàng
     {
       title: "Định lượng NVL",
-      tooltip: "Định lượng NVL",
       inputType: "combobox",
+      columType: "text",
     },
     // Tài khoản ngân hàng
     {
       title: "Hiển thị trên thực đơn",
-      tooltip: "Hiển thị trên thực đơn",
       inputType: "combobox",
+      columType: "checkbox",
     },
     // Chi nhánh ngân hàng
     {
       title: "Ngừng bán",
-      tooltip: "Ngừng bán",
       inputType: "combobox",
+      columType: "checkbox",
     },
   ];
 };
@@ -200,6 +210,11 @@ watch(() => {
   setColumnTable();
 });
 
+
+const closeWhenCheck = () => {
+  formFood.value.codeFocus()
+}
+
 // /**
 //  * Author: Anh Quân (28/06/2023)
 //  * Description: hàm click vào button thêm
@@ -209,5 +224,43 @@ const showModalAddFood = () => {
   modalForm.setObjectForm({});
   modalForm.setMethod(Enum.EditMode.Add);
   modalForm.open();
+};
+/**
+ * Author: Anh Quân (09/07/2023)
+ * Description: Hàm nhận emit khi click sửa thông tin
+ */
+const handleShowEditInfo = (data) => {
+  modalForm.open();
+  modalForm.setAction("Thông tin nhân viên");
+  modalForm.setMethod(Enum.EditMode.Update);
+  dialog.setMethod(Enum.EditMode.Update);
+  modalForm.setObjectForm(data);
+};
+
+// /**
+//  * Author: Anh Quân (11/07/2023)
+//  * Description: Hàm nhận emit set pagesize cho bảng dữ liệu
+//  */
+const setPageSize = (pageSize) => {
+  paging.value.pageSize = pageSize;
+  // paging.value.currentPage = pageNumber;
+  dataTable.value = [];
+  getData();
+};
+// /**
+//  * Author: Anh Quân (01/07/2023)
+//  * Description: hàm nhận emit chọn hàng trên table
+//  */
+const selectRowTable = (isChecked, data) => {
+  try {
+    dataTable.value = dataTable.value.map((employee) => {
+      if (employee.EmployeeId === data.EmployeeId) {
+        employee.isChecked = isChecked;
+      }
+      return employee;
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>

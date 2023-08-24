@@ -8,7 +8,7 @@
                 </div>
                 <button @click="closeModal" class="modal-form-button"></button>
             </div>
-            <div class="naquan-modal-form__body">
+            <div class="naquan-modal-form__body"> 
                 <slot></slot>
             </div>
             <div class="naquan-modal-form__footer">

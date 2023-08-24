@@ -133,13 +133,7 @@ export const convertDataTable = (arr, columnsTable) => {
             const convertData = {...data }
             columnsTable.forEach((column) => {
                 const value = convertData[column.key]
-                if (column.type === 'gender') {
-                    convertData[column.key] = convertGender(value)
-                }
-                if (column.type === 'date') {
-                    convertData[column.key] = convertDate(value)
-                }
-                if (column.type === 'money') {
+                if (column.type === 'price') {
                     convertData[column.key] = convertCurrency(value)
                 }
             })

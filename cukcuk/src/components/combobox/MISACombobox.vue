@@ -13,6 +13,7 @@
       />
       <div class="icon-dropdown" @click="inputElement.focus()"></div>
       <div class="icon-dropdown-filter" v-if="filter"></div>
+      <div class="icon-dropdown-search" v-if="search"></div>
       <div class="icon-dropdown-plus" v-if="plus"></div>
     </div>
     <div class="combobox__dropdown">
@@ -79,6 +80,7 @@ const props = defineProps({
   focus: Boolean, //focus input,
   filter: { type: Boolean, default: false },
   plus: { type: Boolean, default: false },
+  search: { type: Boolean, default: false },
   filterHeader: { type: Boolean, default: false },
 });
 const itemDropdown = ref(null);

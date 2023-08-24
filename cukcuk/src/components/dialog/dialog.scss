@@ -1,0 +1,61 @@
+.overley-dialog {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #0000001f;
+    z-index: 3;
+}
+
+.modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: calc(100vw - 32px);
+    width: 400px;
+    height: 123px;
+    width: 400px;
+    box-shadow: 0 0 20px gray;
+    border-radius: 4px;
+    background-color: #fff;
+    animation: down 0.2s ease;
+    border: 5px solid var(--primary-color);
+    @keyframes down {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -200%);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+    }
+    .quan-dialog {
+        display: flex;
+        flex-direction: column;
+        .dialog-header {
+            height: 25px;
+            width: 100%;
+            background-color: var(--primary-color);
+        }
+        .dialog-body {
+            background-color: blueviolet;
+        }
+        .dialog-function {
+            display: flex;
+            justify-content: flex-end;
+            column-gap: 8px;
+            width: 100%;
+            bottom: 0;
+            position: absolute;
+            padding: 6px;
+            button {
+                display: flex;
+                justify-content: center;
+                padding-left: 0;
+            }
+        }
+    }
+}

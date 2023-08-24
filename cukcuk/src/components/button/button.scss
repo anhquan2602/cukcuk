@@ -49,6 +49,7 @@
     display: flex;
     align-items: center;
     border: none;
+    background-color: #ededed;
     &:hover {
         border: 0.8px solid var(--boder-color-hover);
         color: var(--text-primary-color);

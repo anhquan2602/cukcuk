@@ -1,46 +1,95 @@
 <template class="quan-table">
   <div class="wrap-table">
     <table>
-      <thead class="table-thead">
-        <tr class="table-trow">
-          <th
-            class="colum_thead"
-            scope="col"
-            v-tooltip="item.tooltip"
-            v-for="item in columnsTable"
-            :key="item.dataIndex"
+      <div class="wrap-thead">
+        <thead class="table-thead">
+          <tr class="table-trow">
+            <th
+              class="colum_thead"
+              scope="col"
+              v-for="item in columnsTable"
+              :key="item.dataIndex"
+            >
+              <div class="name__thead">{{ item.title }}</div>
+              <p
+                @mousedown="
+                  (e) => {
+                    startResize(e, item.key);
+                  }
+                "
+                v-if="index < columnsTable.length - 1"
+                class="table-col--resize"
+              ></p>
+              <div class="input__theader">
+                <MISACombobox
+                  v-if="item.inputType == 'combobox'"
+                  class="combo_thead"
+                  placeholder="Tất cả"
+                />
+                <MISAInput
+                  v-if="item.inputType == 'filter'"
+                  class="input_thead"
+                  filter
+                />
+                <MISAInput
+                  v-if="item.inputType == 'compare'"
+                  class="input_thead"
+                  compare
+                />
+              </div>
+            </th>
+          </tr>
+        </thead>
+      </div>
+      <tbody class="tbody">
+        <tr
+          :class="{
+            'table-row--action':
+              rowData[props.propertiesIdName] ===
+              dialog.objectData[propertiesIdName],
+          }"
+          v-for="rowData in dataTable"
+          :key="rowData[propertiesIdName]"
+        >
+          <td
+            :class="[{ 'table-row--checked': rowData.isChecked }]"
+            scope="row"
           >
-            <div class="name__thead">{{ item.title }}</div>
-            <p
-              @mousedown="
-                (e) => {
-                  startResize(e, item.key);
-                }
-              "
-              v-if="index < columnsTable.length - 1"
-              class="table-col--resize"
-            ></p>
-            <div class="input__theader">
-              <MISACombobox
-                v-if="item.inputType == 'combobox'"
-                class="combo_thead"
-                placeholder="Tất cả"
+            <label class="container-input center">
+              <input
+                @change="handleSelectRow(rowData)"
+                class="table__input--checkbox"
+                :checked="rowData.isChecked"
+                type="checkbox"
+                name="table"
+                id=""
               />
-              <MISAInput
-                v-if="item.inputType == 'filter'"
-                class="input_thead"
-                filter
-              />
-              <MISAInput
-                v-if="item.inputType == 'compare'"
-                class="input_thead"
-                compare
-              />
-            </div>
-          </th>
+              <div class="checkmark"></div>
+            </label>
+          </td >
+
+          <td
+            :class="[
+              { 'table-row--checked': rowData.isChecked },
+              { 'td-control': item.dataIndex === 'action' },
+              ,
+            ]"
+            @dblclick="handleShowEditInfo(rowData)"
+            v-for="item in columnsStyle"
+            :style="{
+              textAlign: item.align,
+              width: item.width,
+              maxWidth: item.width,
+            }"
+            :key="item.dataIndex"
+            v-tooltip="rowData[item.key]"
+          >
+            <slot :name="item.key" v-bind="rowData">
+              {{ rowData[item.key] }}
+            </slot>
+          </td>
         </tr>
-      </thead>
-      <tbody class="tbody"></tbody>
+      </tbody>
       <tfoot class="tfoot"></tfoot>
     </table>
   </div>
@@ -100,7 +149,7 @@ const props = defineProps({
 const columnsStyle = computed(() => {
   const newColumns = props.columns.map((column) => {
     if (column.type === "id") {
-      column.width = "100px";
+      column.width = "200px";
       column.align = "left";
     }
     if (column.type === "code") {
@@ -144,35 +193,37 @@ watch(
  * Author: Anh Quân (20/06/2023)
  * Description: Hàm tăng giảm kích thước cột trong table
  */
- function startResize(e, columnKey) {
-    const parrentElementResize = e.target.parentElement;
-    const theadTr = parrentElementResize.parentElement;
-    const element = parrentElementResize.getBoundingClientRect();
-    try {
-        window.addEventListener('mousemove', mouseMove);
-    } catch (error) {
-        console.log(error);
+function startResize(e, columnKey) {
+  const parrentElementResize = e.target.parentElement;
+  const theadTr = parrentElementResize.parentElement;
+  const element = parrentElementResize.getBoundingClientRect();
+  try {
+    window.addEventListener("mousemove", mouseMove);
+  } catch (error) {
+    console.log(error);
+  }
+  //khi di chuyển chuột
+  function mouseMove(e) {
+    //lấy vị trí bắt đầu element
+    const leftPositionElement = element.left;
+    //chiều ngang mới = vị trí chuột hiện tại trừ đi vị trí  element
+    const newWidth = e.clientX - leftPositionElement + "px";
+    const columnResize = columnsTable.value.find(
+      (col) => col.key === columnKey
+    );
+    if (columnResize) {
+      columnResize.width = newWidth;
+      // console.log(columnResize);
     }
-    //khi di chuyển chuột
-    function mouseMove(e) {
-        //lấy vị trí bắt đầu element
-        const leftPositionElement = element.left;
-        //chiều ngang mới = vị trí chuột hiện tại trừ đi vị trí  element
-        const newWidth = e.clientX - leftPositionElement + 'px';
-        const columnResize = columnsTable.value.find((col) => col.key === columnKey);
-        if (columnResize) {
-            columnResize.width = newWidth;
-            // console.log(columnResize);
-        }
-        // parrentElementResize.style.width = newWidth;
-        theadTr.style.cursor = 'e-resize';
-        window.addEventListener('mouseup', clearMouseMove);
-    }
-    // khi bỏ giữ chuột
-    function clearMouseMove() {
-        theadTr.style.cursor = 'auto';
-        window.removeEventListener('mousemove', mouseMove);
-    }
+    // parrentElementResize.style.width = newWidth;
+    theadTr.style.cursor = "e-resize";
+    window.addEventListener("mouseup", clearMouseMove);
+  }
+  // khi bỏ giữ chuột
+  function clearMouseMove() {
+    theadTr.style.cursor = "auto";
+    window.removeEventListener("mousemove", mouseMove);
+  }
 }
 </script>
 <style>

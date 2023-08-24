@@ -1,0 +1,78 @@
+.filter-rule-container {
+  position: relative;
+}
+
+.m__filter-rule {
+  outline: 1ox double var(--default-btn--hover-background-border-color);
+  width: 24px;
+  height: 24px;
+  font-weight: 500;
+  border: 1px solid var(--default-btn-background-border-color);
+  border-radius: 2px;
+}
+
+.m__filter-rule:hover {
+  width: 24px;
+  height: 24px;
+  font-weight: 500;
+  border: 1px solid var(--default-btn--hover-background-border-color);
+  background-color: var(--default-btn--active-background-color);
+  cursor: pointer;
+}
+
+.m__filter-rule:active {
+  border: 1px solid var(--default-btn--hover-background-border-color);
+  background-color: var(--default-btn--active-background-color);
+}
+
+.filter-active {
+  height: 16px;
+  width: 16px;
+}
+
+.list-filter-container {
+  position: absolute;
+  top: 30px;
+  left: -2px;
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 2px;
+  display: block;
+}
+
+.list-filter-record {
+  text-align: center;
+  align-content: center;
+  width: fit-content;
+  padding: 0px;
+  list-style: none;
+  max-height: 200px;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  column-gap: 3px;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  padding: 0px 4px 0px 4px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+  height: 25px;
+}
+
+.list-item:hover {
+  cursor: pointer;
+  background-color: #e4ebf5;
+}
+.filter-rule-container:focus-within {
+  outline: 1px double var(--default-btn--hover-background-border-color);
+  border-radius: 2px;
+}
+.list__option--hover {
+  cursor: pointer;
+  background-color: #e4ebf5;
+}

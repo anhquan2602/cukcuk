@@ -6,7 +6,7 @@
     </div>
     <div class="header__right">
       <div class="left__side">
-        <MISACombobox placeholder="Chuỗi nhà hàng" filter style="width: 220px;"/>
+        <MISACombobox combobox value placeholder="Chuỗi nhà hàng" filter style="width: 220px;"/>
         <MISACombobox placeholder="Tiếng Việt" />
       </div>
       <div class="right__side">
